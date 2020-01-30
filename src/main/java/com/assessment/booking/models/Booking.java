@@ -14,6 +14,7 @@ import java.util.UUID;
 @Table(name = "bookings")
 public class Booking {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID bookingId;
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Passenger passenger;
@@ -28,16 +29,11 @@ public class Booking {
     private List<TripWayPoint> tripWayPoints;
 
     public Booking(){
-        this.bookingId = UUID.randomUUID();
         this.createdOn = this.lastModifiedOn = Instant.now();
         this.tripWayPoints = new ArrayList<>();
     }
     public UUID getBookingId() {
         return bookingId;
-    }
-
-    public void setBookingId(UUID bookingId) {
-        this.bookingId = bookingId;
     }
 
     public Passenger getPassenger() {

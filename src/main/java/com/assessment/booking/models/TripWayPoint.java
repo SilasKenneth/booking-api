@@ -8,6 +8,7 @@ import java.util.UUID;
 @Table(name = "trip_way_points")
 public class TripWayPoint {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID tripWayPointId;
     @ManyToOne
     private Booking booking;
