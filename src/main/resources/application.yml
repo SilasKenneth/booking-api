@@ -5,7 +5,7 @@ spring:
     ddl-auto: update
   datasource:
     url: ${DATABASE_URL}
-    driverName: nothing
+    driverClassName: org.postgresql.Driver
     minIdle: 2
     maxIdle: 5
     initialSize: 5
