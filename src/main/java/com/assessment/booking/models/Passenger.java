@@ -13,7 +13,5 @@ public class Passenger {
     @NotNull
     private String name;
     private String contactNumber;
-    public Passenger(){
-        this.passengerId = UUID.randomUUID();
-    }
+    public Passenger(){ }
 }

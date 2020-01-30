@@ -1,8 +1,8 @@
 spring:
   jpa:
     open-in-view: false
-  hibernate:
-    ddl-auto: update
+    hibernate:
+      ddl-auto: create-drop
   datasource:
     url: ${DATABASE_URL}
     driverClassName: org.postgresql.Driver

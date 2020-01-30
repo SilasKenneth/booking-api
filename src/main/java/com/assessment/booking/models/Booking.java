@@ -16,32 +16,48 @@ public class Booking{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID bookingId;
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    private Passenger passenger;
     private OffsetDateTime pickupTime;
     private Boolean asap = true;
     private Integer waitingTime;
     private BigDecimal price;
     private Integer rating;
+    private String passengerName;
+    private String passengerContactNumber;
+    private Integer noOfPassengers;
     private Instant createdOn;
     private Instant lastModifiedOn;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "booking")
     private List<TripWayPoint> tripWayPoints;
 
     public Booking(){
         this.createdOn = this.lastModifiedOn = Instant.now();
         this.tripWayPoints = new ArrayList<>();
     }
+    public String getPassengerName() {
+        return passengerName;
+    }
+
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
+
+    public String getPassengerContactNumber() {
+        return passengerContactNumber;
+    }
+
+    public void setPassengerContactNumber(String passengerContactNumber) {
+        this.passengerContactNumber = passengerContactNumber;
+    }
+
+    public Integer getNoOfPassengers() {
+        return noOfPassengers;
+    }
+
+    public void setNoOfPassengers(Integer noOfPassengers) {
+        this.noOfPassengers = noOfPassengers;
+    }
     public UUID getBookingId() {
         return bookingId;
-    }
-
-    public Passenger getPassenger() {
-        return passenger;
-    }
-
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
     }
 
     public OffsetDateTime getPickupTime() {
@@ -116,7 +132,6 @@ public class Booking{
     public String toString() {
         return "Booking{" +
                 "bookingId=" + bookingId +
-                ", passenger=" + passenger +
                 ", pickupTime=" + pickupTime +
                 ", asap=" + asap +
                 ", waitingTime=" + waitingTime +

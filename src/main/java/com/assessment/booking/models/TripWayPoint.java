@@ -19,7 +19,6 @@ public class TripWayPoint {
     private Instant tripWayPointTimestamp;
 
     public TripWayPoint(){
-        this.tripWayPointId = UUID.randomUUID();
         this.tripWayPointTimestamp = Instant.now();
     }
 }
