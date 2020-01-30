@@ -13,9 +13,7 @@ import javax.sql.DataSource;
 public class DatabaseConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
-
-    @Autowired
-    private DataSource dataSource;
+    
     @Bean
     public DataSource dataSource(){
         HikariConfig hikariConfig = new HikariConfig();
