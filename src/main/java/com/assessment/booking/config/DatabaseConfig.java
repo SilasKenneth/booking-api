@@ -2,6 +2,7 @@ package com.assessment.booking.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ public class DatabaseConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
+    @Autowired
+    private DataSource dataSource;
     @Bean
     public DataSource dataSource(){
         HikariConfig hikariConfig = new HikariConfig();
