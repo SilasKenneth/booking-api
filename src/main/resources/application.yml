@@ -2,7 +2,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
   datasource:
     url: ${DATABASE_URL}
     driverClassName: org.postgresql.Driver
