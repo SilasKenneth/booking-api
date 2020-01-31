@@ -1,18 +1,20 @@
 package com.assessment.booking.models;
 
-import org.springframework.data.repository.Repository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @Entity
 @Table(name = "bookings")
-public class Booking{
+public class Booking implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID bookingId;
@@ -26,12 +28,11 @@ public class Booking{
     private Integer noOfPassengers;
     private Instant createdOn;
     private Instant lastModifiedOn;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "booking")
+    @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TripWayPoint> tripWayPoints;
 
     public Booking(){
         this.createdOn = this.lastModifiedOn = Instant.now();
-        this.tripWayPoints = new ArrayList<>();
     }
     public String getPassengerName() {
         return passengerName;
@@ -113,7 +114,7 @@ public class Booking{
     }
 
     public List<TripWayPoint> getTripWayPoints() {
-        return tripWayPoints;
+        return this.tripWayPoints;
     }
 
     public void setTripWayPoints(List<TripWayPoint> tripWayPoints) {
@@ -122,10 +123,6 @@ public class Booking{
 
     public void addTripWayPoint(TripWayPoint tripWayPoint){
         this.tripWayPoints.add(tripWayPoint);
-    }
-
-    public List<Booking> all() {
-        return new ArrayList<>();
     }
 
     @Override

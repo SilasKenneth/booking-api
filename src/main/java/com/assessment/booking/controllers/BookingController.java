@@ -4,6 +4,7 @@ package com.assessment.booking.controllers;
 import com.assessment.booking.models.Booking;
 import com.assessment.booking.models.TripWayPoint;
 import com.assessment.booking.services.BookingService;
+import com.assessment.booking.services.TripWayPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private TripWayPointService tripWayPointService;
 
     @GetMapping("")
     public  List<Booking> getAllBookings(){
@@ -48,6 +51,16 @@ public class BookingController {
 
     @GetMapping(value = "/{bookingId}/waypoints")
     public List<TripWayPoint> getTripWayPoints(@PathVariable("bookingId") UUID bookingId){
-        return new ArrayList<>();
+        Optional<Booking> booking = bookingService.getBooking(bookingId);
+        if(!booking.isPresent()){
+            return new ArrayList<>();
+        }
+        System.out.println(booking.get());
+        return tripWayPointService.getAllWayPoints(booking.get());
+    }
+
+    @PostMapping(value = "/{bookingId}/waypoints")
+    public TripWayPoint addTripWayPoint(@RequestBody TripWayPoint wayPoint, @PathVariable("bookingId")UUID bookingId){
+        return tripWayPointService.addWayPoint(wayPoint, bookingId);
     }
 }

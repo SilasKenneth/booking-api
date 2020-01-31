@@ -5,17 +5,19 @@ import com.assessment.booking.services.TripWayPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(name = "/api/waypoints")
+@RequestMapping(value = "/api/waypoints")
 public class TripWayPointController {
     @Autowired
     private TripWayPointService tripWayPointService;
 
     @GetMapping(value = "/{wayPointId}")
-    public Optional<TripWayPoint> getWayPoint(@PathVariable("wayPointId")UUID wayPointId){
+    public TripWayPoint getWayPoint(@PathVariable("wayPointId")UUID wayPointId){
         return tripWayPointService.getWaypoint(wayPointId);
     }
 

@@ -1,16 +1,19 @@
 package com.assessment.booking.models;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @Table(name = "trip_way_points")
-public class TripWayPoint {
+public class TripWayPoint implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID tripWayPointId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Booking booking;
     private Boolean lastStop = false;
     private String locality;
@@ -28,6 +31,7 @@ public class TripWayPoint {
         return tripWayPointId;
     }
 
+    @Transactional
     public Booking getBooking() {
         return booking;
     }
