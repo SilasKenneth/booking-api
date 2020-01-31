@@ -29,4 +29,13 @@ public class BookingService {
     public Booking addBooking(Booking booking){
         return bookingRepository.save(booking);
     }
+
+    public Optional<Booking> updateBooking(UUID bookingId, Booking newBooking){
+        Optional<Booking> booking = bookingRepository.findById(bookingId);
+        if(booking.equals(Optional.empty())){
+            return booking;
+        }
+        booking = Optional.ofNullable(newBooking);
+        return booking;
+    }
 }

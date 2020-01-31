@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -39,7 +40,7 @@ public class BookingController {
     }
 
     @GetMapping(value = "/{bookingId}")
-    public Booking getSpecificBooking(@PathVariable("bookingId") UUID bookingId){
-        return new Booking();
+    public Optional<Booking> getSpecificBooking(@PathVariable("bookingId") UUID bookingId){
+        return bookingService.getBooking(bookingId);
     }
 }
