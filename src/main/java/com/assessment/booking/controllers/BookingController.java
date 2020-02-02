@@ -8,7 +8,7 @@ import com.assessment.booking.services.TripWayPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,13 +24,12 @@ public class BookingController {
     private TripWayPointService tripWayPointService;
 
     @GetMapping("")
-    public  List<Booking> getAllBookings(){
+    public  Collection<Booking> getAllBookings(){
         return bookingService.getAllBookings();
     }
 
     @PostMapping("")
     public Booking createBooking(@RequestBody Booking booking){
-        System.out.println("Hello");
         return bookingService.addBooking(booking);
     }
 
@@ -45,18 +44,13 @@ public class BookingController {
     }
 
     @GetMapping(value = "/{bookingId}")
-    public Optional<Booking> getSpecificBooking(@PathVariable("bookingId") UUID bookingId){
+    public Booking getSpecificBooking(@PathVariable("bookingId") UUID bookingId){
         return bookingService.getBooking(bookingId);
     }
 
     @GetMapping(value = "/{bookingId}/waypoints")
-    public List<TripWayPoint> getTripWayPoints(@PathVariable("bookingId") UUID bookingId){
-        Optional<Booking> booking = bookingService.getBooking(bookingId);
-        if(!booking.isPresent()){
-            return new ArrayList<>();
-        }
-        System.out.println(booking.get());
-        return tripWayPointService.getAllWayPoints(booking.get());
+    public Collection<TripWayPoint> getTripWayPoints(@PathVariable("bookingId") UUID bookingId){
+        return tripWayPointService.getAllWayPoints(bookingId);
     }
 
     @PostMapping(value = "/{bookingId}/waypoints")

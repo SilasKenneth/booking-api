@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,18 +23,20 @@ public class TripWayPointService {
     private TripWayPointRepository tripWayPointRepository;
     @Autowired
     private BookingRepository bookingRepository;
-    public List<TripWayPoint> getAllWayPoints(Booking booking){
-        return booking.getTripWayPoints();
+
+    public Collection<TripWayPoint> getAllWayPoints(UUID bookingId){
+        return tripWayPointRepository.findByBookingBookingId(bookingId);
     }
 
     @Transactional
     public TripWayPoint getWaypoint(UUID tripWayPointId){
-        TripWayPoint tripWayPoint = tripWayPointRepository.findById(tripWayPointId).orElse(null);
-        if(tripWayPoint == null){
+        Optional<TripWayPoint> tripWayPoint = tripWayPointRepository.findById(tripWayPointId);
+        if(!tripWayPoint.isPresent()){
             return null;
         }
-        Hibernate.initialize(tripWayPoint.getBooking());
-        return tripWayPoint;
+        TripWayPoint result = tripWayPoint.get();
+        Hibernate.initialize(result.getBooking());
+        return result;
     }
 
     public Optional<TripWayPoint> updateWayPoint(UUID wayPointId, TripWayPoint newWayPoint) {
